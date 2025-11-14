@@ -5,7 +5,7 @@ using System.Collections.Generic; // ¡Importante para las Listas!
 namespace GimnasioGrupo2.Models
 {
     // Hereda de Persona (Dni, Nombre, etc.)
-    //Hice Cambio Cristian
+    //Hice Cambio Cristian ..
     public class Cliente : Persona
     {
         // --- Propiedades Propias de Cliente ---
