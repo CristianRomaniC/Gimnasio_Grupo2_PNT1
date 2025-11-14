@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic; // ¡Importante para las Listas!
+//prueba comentario lucas
 
 namespace GimnasioGrupo2.Models
 {
