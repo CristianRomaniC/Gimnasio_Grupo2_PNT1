@@ -1,71 +1,41 @@
 ﻿@model IEnumerable<GimnasioGrupo2.Models.Cliente>
 
 @{
-    ViewData["Title"] = "Index";
+ ViewData["Title"] = "Clientes";
 }
 
-<h1>Index</h1>
+<div class="page-clients-index">
+ <div class="d-flex justify-content-between align-items-center mb-3">
+ <h2 class="text-white">Clientes</h2>
+ <div>
+ <a class="btn btn-action-new btn-lg" asp-action="Create" aria-label="Nuevo Cliente"><span class="icon">➕</span> <span class="label">Nuevo Cliente</span></a>
+ </div>
+ </div>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Habilitado)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.MembresiaVigente)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Objetivo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Apellido)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaNacimiento)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Habilitado)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.MembresiaVigente)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Objetivo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellido)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FechaNacimiento)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Dni">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Dni">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Dni">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+ <div class="grid">
+ @foreach(var c in Model){
+ <div class="card-gym fade-in">
+ <div class="d-flex justify-content-between align-items-start">
+ <div>
+ <h5 class="card-title">@c.Nombre @c.Apellido</h5>
+ <div class="card-sub">DNI: @c.Dni · Tel: @c.Telefono</div>
+ <div class="mt-2">Objetivo: @c.Objetivo</div>
+ </div>
+ <div class="text-end">
+ <a class="btn-action-view mb-2 d-block" asp-action="Details" asp-route-id="@c.Dni">
+ <span class="icon">🔍</span> <span class="label">Ver</span>
+ </a>
+ <a class="btn-action-edit mb-2 d-block" asp-action="Edit" asp-route-id="@c.Dni">
+ <span class="icon">✏️</span> <span class="label">Editar</span>
+ </a>
+ <form asp-action="Delete" asp-route-id="@c.Dni" method="post" style="display:inline">
+ <button class="btn-action-delete" type="submit">
+ <span class="icon">🗑️</span> <span class="label">Eliminar</span>
+ </button>
+ </form>
+ </div>
+ </div>
+ </div>
+ }
+ </div>
+</div>

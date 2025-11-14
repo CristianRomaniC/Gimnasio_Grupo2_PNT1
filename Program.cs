@@ -1,6 +1,8 @@
 // --- PASO 1 (NUEVO): Agregar los 'using' ---
 using Microsoft.EntityFrameworkCore;
 using GimnasioGrupo2.Data;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,9 +18,6 @@ builder.Services.AddDbContext<GimnasioContext>(options =>
 );
 // --- FIN DE LOS PASOS NUEVOS ---
 
-// Elimina la segunda declaración de 'builder' para evitar el error CS0128
-// var builder = WebApplication.CreateBuilder(args); <-- Esta línea se elimina
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -33,6 +32,21 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+// Serve static files from wwwroot
+app.UseStaticFiles();
+
+// Also expose a project-level "images" folder (outside wwwroot) at the URL path "/images"
+var imagesPath = Path.Combine(builder.Environment.ContentRootPath, "images");
+if (Directory.Exists(imagesPath))
+{
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(imagesPath),
+        RequestPath = "/images"
+    });
+}
+
 app.UseRouting();
 
 app.UseAuthorization();

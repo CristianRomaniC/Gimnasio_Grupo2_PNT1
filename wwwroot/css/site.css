@@ -21,11 +21,216 @@ body {
   margin-bottom: 60px;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+/* Global body background (disabled here in favor of per-page backgrounds) */
+body {
+ background-color: var(--bg);
+ background-image: none; /* use body.bg-* for page backgrounds */
+ background-size: cover;
+ background-position: center;
+ background-repeat: no-repeat;
+ /* background-attachment: fixed; removed so image scrolls with content */
+ min-height:100vh;
+ color: #e6eef8;
+ font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+/* Apply gym background when body has .cover-bg (kept for compatibility) */
+body.cover-bg{ background-image: url('/images/fondo1.svg'); background-size: cover; background-position: center center; background-attachment: scroll; }
+body.cover-bg.bg-1 { background-image: url('/images/fondo1.svg'); background-attachment: scroll; }
+body.cover-bg.bg-2 { background-image: url('/images/fondo2.svg'); background-attachment: scroll; }
+body.cover-bg.bg-3 { background-image: url('/images/gym-bg.svg'); background-attachment: scroll; }
+
+/* overlay to improve contrast (reduced opacity so image shows through) */
+body.cover-bg::before{
+ content:'';position:fixed;inset:0;background:linear-gradient(180deg, rgba(2,6,23,0.25), rgba(2,6,23,0.45));pointer-events:none;z-index:0
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+
+:root{
+ --bg:#0f1724; /* dark gym background fallback */
+ --card:#0b1220;
+ --accent:#ff2d55; /* gym red */
+ --accent-2:#00d4ff; /* cyan */
+ --muted:#94a3b8;
+ --glass: rgba(255,255,255,0.04);
+ --glass-strong: rgba(0,0,0,0.55);
+}
+
+html{font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:var(--bg); color:#ffffff}
+
+/* Ensure links are visible but still white text */
+a{color:#ffffff}
+
+/* Body background options (images in /wwwroot/images) */
+body.bg-default { background-image: url('/images/bg1.jpg'); background-attachment: scroll; }
+body.bg-2 { background-image: url('/images/bg2.jpg'); background-attachment: scroll; }
+body.bg-3 { background-image: url('/images/bg3.jpg'); background-attachment: scroll; }
+body.bg-4 { background-image: url('/images/bg4.jpg'); background-attachment: scroll; }
+
+body.bg-default, body.bg-2, body.bg-3, body.bg-4 {
+ background-size: cover;
+ background-position: center;
+ background-repeat: no-repeat;
+ /* background-attachment: fixed; changed to scroll so image fills page length */
+ color: #ffffff;
+}
+
+/* Hero overlay (only darken the hero area for legibility) */
+.hero { position: relative; }
+.hero::before {
+ content: '';
+ position: absolute;
+ inset:0;
+ background: linear-gradient(180deg, rgba(2,6,23,0.45), rgba(2,6,23,0.65));
+ pointer-events: none;
+ z-index:15;
+}
+
+/* Ensure hero content sits above hero overlay */
+.hero-inner { position: relative; z-index:20; }
+
+/* Make contrast-box darker and above overlay for clear legibility */
+.contrast-box { background: rgba(0,0,0,0.78); padding:1rem; border-radius:8px; z-index:40; position:relative; }
+
+/* Ensure container content is above overlay */
+.container { position: relative; z-index:35; }
+
+/* Keep text white explicitly */
+.page-home .hero-inner h1, .page-home .lead, .card-title, .card-sub, label, .form-label {
+ color: #ffffff !important;
+}
+
+.page-clients-index .card-gym { background: linear-gradient(180deg, rgba(10,10,12,0.7), rgba(6,6,8,0.6)); border:1px solid rgba(255,255,255,0.06); }
+.page-clients-index .card-gym:hover{ transform: translateY(-8px) scale(1.01); box-shadow:030px60px rgba(2,6,23,0.7); }
+.page-clients-index .card-title{ color:#ffffff; }
+.page-clients-index .card-sub{ color:#ffffff; }
+
+.page-clients-create .card-gym, .page-clients-edit .card-gym {
+ background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+ border-left:4px solid var(--accent);
+}
+.page-clients-create .btn-primary, .page-clients-edit .btn-primary { background: var(--accent); border: none; }
+
+.page-clients-details .card-gym { background: rgba(3,8,15,0.6); border:1px solid rgba(255,255,255,0.04); }
+.page-clients-delete .card-gym { background: linear-gradient(90deg, rgba(255,45,85,0.08), rgba(0,0,0,0.6)); border:1px solid rgba(255,45,85,0.12); }
+
+/* Ensure form labels and text are legible and white */
+.form-label, label { color: #ffffff; }
+.form-control { color: #ffffff; }
+
+/* Ensure form inputs have visible text and caret */
+.form-control, .form-select, textarea {
+ background: rgba(255,255,255,0.04) !important; /* subtle translucent light over dark background */
+ color: #ffffff !important;
+ caret-color: #ffffff !important;
+ border:1px solid rgba(255,255,255,0.08) !important;
+}
+
+/* Placeholder color */
+.form-control::placeholder, textarea::placeholder {
+ color: rgba(255,255,255,0.6) !important;
+}
+
+/* WebKit specific text fill for some browsers (fix for date inputs) */
+input, textarea, select {
+ -webkit-text-fill-color: #ffffff !important;
+}
+
+/* Date input styling for better visibility */
+input[type="date"], input[type="datetime-local"], input[type="time"] {
+ background: rgba(255,255,255,0.04) !important;
+ color: #ffffff !important;
+}
+
+/* Remove default inner shadow in some browsers */
+input[type="search"]::-webkit-search-decoration, input[type="search"]::-webkit-search-cancel-button {
+ -webkit-appearance: none;
+}
+
+/* Buttons contrast */
+.btn-primary { background: linear-gradient(90deg,var(--accent), #ff6b88); color: #fff; }
+.btn-outline-light { border:1px solid rgba(255,255,255,0.18); color:#fff }
+
+/* Animations */
+@keyframes popIn { from { opacity:0; transform: translateY(18px) scale(.98); } to { opacity:1; transform:none; } }
+@keyframes floatUp { from{transform:translateY(8px);opacity:0} to{transform:none;opacity:1} }
+.fade-slow { animation: floatUp .9s ease both }
+
+/* accessibility helpers */
+.contrast-box { background: rgba(0,0,0,0.45); padding:1rem; border-radius:8px; }
+
+/* small devices adjustments */
+@media (max-width:576px){ .hero-inner h1 { font-size:1.9rem } }
+
+/* keep previous helpers */
+.card-gym{ padding:1.2rem;border-radius:12px;color:inherit;transition:transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s; }
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+.fade-in{animation:fadeInUp .6s ease both}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none}}
+
+/* Action buttons: view, edit, delete */
+.btn-action-view {
+ background: rgba(255,255,255,0.04);
+ color: #ffffff;
+ border:1px solid rgba(255,255,255,0.08);
+ padding: .45rem .8rem;
+ border-radius:10px;
+ font-weight:600;
+ box-shadow:06px18px rgba(0,0,0,0.45);
+}
+.btn-action-view:hover, .btn-action-view:focus {
+ transform: translateY(-3px);
+ box-shadow:010px30px rgba(0,0,0,0.6);
+ color: #ffffff;
+}
+
+.btn-action-edit {
+ background: linear-gradient(90deg, #00d4ff, #0077b6);
+ color: #fff;
+ border: none;
+ padding: .45rem .85rem;
+ border-radius:10px;
+ font-weight:700;
+ box-shadow:08px28px rgba(0,212,255,0.12), inset0 -2px0 rgba(0,0,0,0.12);
+}
+.btn-action-edit:hover, .btn-action-edit:focus {
+ transform: translateY(-3px) scale(1.02);
+ box-shadow:014px40px rgba(0,212,255,0.16);
+}
+
+.btn-action-delete {
+ background: linear-gradient(90deg, var(--accent), #ff6b88);
+ color: #fff;
+ border: none;
+ padding: .45rem .85rem;
+ border-radius:10px;
+ font-weight:700;
+ box-shadow:08px28px rgba(255,45,85,0.12), inset0 -2px0 rgba(0,0,0,0.12);
+}
+.btn-action-delete:hover, .btn-action-delete:focus {
+ transform: translateY(-3px) scale(1.02);
+ box-shadow:014px40px rgba(255,45,85,0.16);
+}
+
+/* New action button for 'Nuevo Cliente' */
+.btn-action-new {
+ background: linear-gradient(90deg, #28c76f, #12b886); /* green gradient */
+ color: #fff;
+ border: none;
+ padding: .55rem .95rem;
+ border-radius:10px;
+ font-weight:700;
+ box-shadow:08px28px rgba(40,199,111,0.12), inset0 -2px0 rgba(0,0,0,0.12);
+}
+.btn-action-new:hover, .btn-action-new:focus {
+ transform: translateY(-3px) scale(1.02);
+ box-shadow:014px40px rgba(40,199,111,0.16);
+}
+
+/* Ensure btn-lg variant looks correct */
+.btn-lg.btn-action-new { padding:.75rem1.15rem; font-size:1.05rem }
+
+/* small icon spacing */
+.btn-action-view .icon, .btn-action-edit .icon, .btn-action-delete .icon { font-size:1.05rem; vertical-align: middle; }
+.btn-action-view .label, .btn-action-edit .label, .btn-action-delete .label { vertical-align: middle; }
