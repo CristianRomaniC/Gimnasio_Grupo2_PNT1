@@ -17,6 +17,8 @@ namespace GimnasioGrupo2.Data
  public DbSet<TipoRutina> TiposRutina { get; set; } = null!;
  public DbSet<ClienteMembresia> ClienteMembresias { get; set; } = null!;
  public DbSet<Gimnasio> Gimnasios { get; set; } = null!;
+ // Nuevo DbSet para Objetos Perdidos
+ public DbSet<ObjetoPerdido> ObjetosPerdidos { get; set; } = null!;
 
  protected override void OnModelCreating(ModelBuilder modelBuilder)
  {
@@ -59,6 +61,13 @@ namespace GimnasioGrupo2.Data
  .WithMany(t => t.ClienteMembresias)
  .HasForeignKey(cm => cm.TipoMembresiaId)
  .OnDelete(DeleteBehavior.Cascade);
+
+ // ObjetoPerdido -> Cliente (opcional)
+ modelBuilder.Entity<ObjetoPerdido>()
+ .HasOne(o => o.Cliente)
+ .WithMany()
+ .HasForeignKey(o => o.ClienteDni)
+ .OnDelete(DeleteBehavior.SetNull);
  }
  }
 }

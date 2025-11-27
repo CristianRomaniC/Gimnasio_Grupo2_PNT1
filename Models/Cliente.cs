@@ -28,10 +28,11 @@ namespace GimnasioGrupo2.Models
 
         // --- Relaciones ---
 
-        // 1. Relación 1-a-N con Rutina (¡CORRECTO!)
+        //1. Relación1-a-N con Rutina (¡CORRECTO!)
         public List<Rutina>? Rutinas { get; set; }
 
-        // 2. Relación N-a-M con TipoMembresia (¡CORRECTO!)
+        //2. Relación N-a-M con TipoMembresia (¡CORRECTO!)
         public List<ClienteMembresia>? ClienteMembresias { get; set; }
+
     }
 }

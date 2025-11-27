@@ -4,6 +4,7 @@ using GimnasioGrupo2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GimnasioGrupo2.Migrations
 {
     [DbContext(typeof(GimnasioContext))]
-    partial class GimnasioContextModelSnapshot : ModelSnapshot
+    [Migration("20251127220227_AddObjetoPerdido_Entregado")]
+    partial class AddObjetoPerdido_Entregado
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

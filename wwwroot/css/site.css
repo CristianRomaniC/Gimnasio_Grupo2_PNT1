@@ -127,6 +127,18 @@ body.bg-default, body.bg-2, body.bg-3, body.bg-4 {
  border:1px solid rgba(255,255,255,0.08) !important;
 }
 
+/* Explicitly style select dropdown options for better contrast */
+.form-select option {
+ background: rgba(11,18,32,0.95) !important; /* dark option background */
+ color: #ffffff !important;
+}
+
+/* Focus styles to ensure inputs remain visible when selected */
+.form-control:focus, .form-select:focus, textarea:focus {
+ box-shadow:0000.1rem rgba(255,255,255,0.06),0000.25rem #258cfb !important;
+ outline: none !important;
+}
+
 /* Placeholder color */
 .form-control::placeholder, textarea::placeholder {
  color: rgba(255,255,255,0.6) !important;

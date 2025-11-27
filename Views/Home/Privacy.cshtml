@@ -1,6 +1,94 @@
-﻿@{
-    ViewData["Title"] = "Privacy Policy";
+﻿@model GimnasioGrupo2.Models.ObjetosPerdidosViewModel
+@{
+ ViewData["Title"] = "Objetos perdidos";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<h1>Objetos perdidos</h1>
+
+@if (!string.IsNullOrEmpty(TempData["StatusMessage"] as string))
+{
+ <div class="alert alert-success" role="alert">@TempData["StatusMessage"]</div>
+}
+
+<div class="row">
+ <div class="col-md-6">
+ <h3>Nuevo objeto</h3>
+ <form method="post" class="row g-3">
+ <div class="col-12">
+ <label asp-for="Objeto.Descripcion" class="form-label"></label>
+ <textarea asp-for="Objeto.Descripcion" class="form-control" rows="3"></textarea>
+ <span asp-validation-for="Objeto.Descripcion" class="text-danger"></span>
+ </div>
+
+ <div class="col-md-6">
+ <label asp-for="Objeto.FechaEncontrado" class="form-label"></label>
+ <input asp-for="Objeto.FechaEncontrado" class="form-control" type="date" />
+ <span asp-validation-for="Objeto.FechaEncontrado" class="text-danger"></span>
+ </div>
+
+ <div class="col-md-6">
+ <label asp-for="Objeto.Ubicacion" class="form-label"></label>
+ <input asp-for="Objeto.Ubicacion" class="form-control" />
+ <span asp-validation-for="Objeto.Ubicacion" class="text-danger"></span>
+ </div>
+
+ <div class="col-12">
+ <label asp-for="Objeto.ClienteDni" class="form-label"></label>
+ <select asp-for="Objeto.ClienteDni" class="form-select" asp-items="Model.ClientesLista"></select>
+ <span asp-validation-for="Objeto.ClienteDni" class="text-danger"></span>
+ </div>
+
+ <div class="col-12">
+ <button type="submit" class="btn btn-primary">Guardar objeto</button>
+ </div>
+ </form>
+ </div>
+
+ <div class="col-md-6">
+ <h3>Lista de objetos</h3>
+ <table class="table table-dark table-striped">
+ <thead>
+ <tr>
+ <th>Id</th>
+ <th>Descripción</th>
+ <th>Encontrado</th>
+ <th>Ubicación</th>
+ <th>Cliente</th>
+ <th>Entregado</th>
+ <th>Acciones</th>
+ </tr>
+ </thead>
+ <tbody>
+ @{
+ var objetos = ViewBag.ObjetosPerdidos as List<GimnasioGrupo2.Models.ObjetoPerdido>;
+ if (objetos != null)
+ {
+ foreach(var o in objetos)
+ {
+ <tr>
+ <td>@o.Id</td>
+ <td>@o.Descripcion</td>
+ <td>@o.FechaEncontrado.ToShortDateString()</td>
+ <td>@o.Ubicacion</td>
+ <td>@(o.Cliente != null ? $"{o.Cliente.Nombre} {o.Cliente.Apellido} ({o.Cliente.Dni})" : "-")</td>
+ <td>@(o.Entregado ? $"Sí ({o.FechaEntregado?.ToShortDateString()})" : "No")</td>
+ <td>
+ @if(!o.Entregado)
+ {
+ <form asp-action="MarcarEntregado" method="post" asp-route-id="@o.Id" style="display:inline">
+ <button class="btn btn-action-edit" type="submit">Marcar entregado</button>
+ </form>
+ }
+ </td>
+ </tr>
+ }
+ }
+ }
+ </tbody>
+ </table>
+ </div>
+</div>
+
+@section Scripts {
+ <partial name="_ValidationScriptsPartial" />
+}

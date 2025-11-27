@@ -1,0 +1,40 @@
+@model GimnasioGrupo2.Models.ObjetosPerdidosViewModel
+@{
+ ViewData["Title"] = "Nuevo objeto perdido";
+}
+
+<h1>Nuevo objeto perdido</h1>
+
+<form method="post" class="row g-3">
+ <div class="col-12">
+ <label asp-for="Objeto.Descripcion" class="form-label"></label>
+ <textarea asp-for="Objeto.Descripcion" class="form-control" rows="3"></textarea>
+ <span asp-validation-for="Objeto.Descripcion" class="text-danger"></span>
+ </div>
+
+ <div class="col-md-4">
+ <label asp-for="Objeto.FechaEncontrado" class="form-label"></label>
+ <input asp-for="Objeto.FechaEncontrado" class="form-control" type="date" />
+ <span asp-validation-for="Objeto.FechaEncontrado" class="text-danger"></span>
+ </div>
+
+ <div class="col-md-4">
+ <label asp-for="Objeto.Ubicacion" class="form-label"></label>
+ <input asp-for="Objeto.Ubicacion" class="form-control" />
+ <span asp-validation-for="Objeto.Ubicacion" class="text-danger"></span>
+ </div>
+
+ <div class="col-md-4">
+ <label asp-for="Objeto.ClienteDni" class="form-label"></label>
+ <select asp-for="Objeto.ClienteDni" class="form-select" asp-items="Model.ClientesLista"></select>
+ <span asp-validation-for="Objeto.ClienteDni" class="text-danger"></span>
+ </div>
+
+ <div class="col-12">
+ <button type="submit" class="btn btn-primary">Guardar objeto</button>
+ </div>
+</form>
+
+@section Scripts {
+ <partial name="_ValidationScriptsPartial" />
+}

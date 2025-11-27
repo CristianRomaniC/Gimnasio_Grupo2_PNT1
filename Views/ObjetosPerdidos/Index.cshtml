@@ -1,0 +1,41 @@
+@model IEnumerable<GimnasioGrupo2.Models.ObjetoPerdido>
+@{
+ ViewData["Title"] = "Objetos perdidos";
+}
+
+<h1>Objetos perdidos</h1>
+
+<table class="table table-dark table-striped">
+ <thead>
+ <tr>
+ <th>Id</th>
+ <th>Descripción</th>
+ <th>Encontrado</th>
+ <th>Ubicación</th>
+ <th>Cliente</th>
+ <th>Entregado</th>
+ <th>Acciones</th>
+ </tr>
+ </thead>
+ <tbody>
+ @foreach(var o in Model){
+ <tr>
+ <td>@o.Id</td>
+ <td>@o.Descripcion</td>
+ <td>@o.FechaEncontrado.ToShortDateString()</td>
+ <td>@o.Ubicacion</td>
+ <td>@(o.Cliente != null ? $"{o.Cliente.Nombre} {o.Cliente.Apellido} ({o.Cliente.Dni})" : "-")</td>
+ <td>@(o.Entregado ? $"Sí (@o.FechaEntregado?.ToShortDateString())" : "No")</td>
+ <td>
+ @if(!o.Entregado){
+ <form asp-action="MarcarEntregado" method="post" asp-route-id="@o.Id" style="display:inline">
+ <button class="btn btn-action-edit" type="submit">Marcar entregado</button>
+ </form>
+ }
+ </td>
+ </tr>
+ }
+ </tbody>
+</table>
+
+<a class="btn btn-action-new" asp-action="Create">Nuevo objeto</a>
